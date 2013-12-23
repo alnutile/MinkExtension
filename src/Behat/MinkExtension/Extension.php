@@ -271,6 +271,7 @@ class Extension implements ExtensionInterface
                             defaultValue(isset($config['selenium2']['browser']) ? $config['selenium2']['browser'] : '%behat.mink.browser_name%')->
                         end()->
                         arrayNode('capabilities')->
+                            normalizeKeys(false)->
                             children()->
                                 scalarNode('browserName')->
                                     defaultValue(isset($config['selenium2']['capabilities']['browserName']) ? $config['selenium2']['capabilities']['browserName'] : 'firefox')->
@@ -301,6 +302,9 @@ class Extension implements ExtensionInterface
                                 end()->
                                 scalarNode('selenium-version')->
                                     defaultValue(isset($config['selenium2']['capabilities']['selenium-version']) ? $config['selenium2']['capabilities']['selenium-version'] : '2.31.0')->
+                                end()->
+                                scalarNode('command-timeout')->
+                                    defaultValue(isset($config['selenium2']['capabilities']['command-timeout']) ? $config['selenium2']['capabilities']['command-timeout'] : '300')->
                                 end()->
                                 scalarNode('max-duration')->
                                     defaultValue(isset($config['selenium2']['capabilities']['max-duration']) ? $config['selenium2']['capabilities']['max-duration'] : '300')->
@@ -344,7 +348,6 @@ class Extension implements ExtensionInterface
                                                 thenInvalid('Cannot find profile zip file %s')->
                                             end()->
                                         end()->
-                                        scalarNode('binary')->end()->
                                     end()->
                                 end()->
                                 arrayNode('chrome')->
